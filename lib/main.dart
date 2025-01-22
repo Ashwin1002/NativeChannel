@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:native_channel/src/device_info.g.dart';
+import 'package:native_channel/src/enable_screenshot.g.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,6 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    ScreenshotApi().disableScreenshot();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _init();
     });
