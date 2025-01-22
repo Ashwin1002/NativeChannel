@@ -2,17 +2,18 @@ import 'package:pigeon/pigeon.dart';
 
 @ConfigurePigeon(
   PigeonOptions(
-      dartOut: 'lib/src/device_info.g.dart',
-      dartOptions: DartOptions(),
-      kotlinOut:
-          'android/app/src/main/kotlin/com/example/native_channel/DeviceInfoApi.g.kt',
-      kotlinOptions: KotlinOptions(
-        errorClassName: 'DeviceInfoApiException',
-      ),
-      swiftOut: 'ios/Runner/DeviceInfoApi.g.swift',
-      swiftOptions: SwiftOptions(
-        errorClassName: 'DeviceInfoApiException',
-      )),
+    dartOut: 'lib/src/device_info.g.dart',
+    dartOptions: DartOptions(),
+    kotlinOut:
+        'android/app/src/main/kotlin/com/example/native_channel/DeviceInfoApi.g.kt',
+    kotlinOptions: KotlinOptions(
+      errorClassName: 'DeviceInfoApiException',
+    ),
+    swiftOut: 'ios/Runner/DeviceInfoApi.g.swift',
+    swiftOptions: SwiftOptions(
+      errorClassName: 'DeviceInfoApiException',
+    ),
+  ),
 )
 class DeviceInfo {
   const DeviceInfo({

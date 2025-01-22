@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:native_channel/src/device_info.g.dart';
 import 'package:native_channel/src/enable_screenshot.g.dart';
+import 'package:native_channel/src/notification_api.g.dart';
 
 void main() {
   runApp(const MyApp());
@@ -62,6 +63,13 @@ class _MyHomePageState extends State<MyHomePage> {
           Text(_deviceInfo?.deviceFamily ?? '-'),
           Text(_deviceInfo?.deviceModel ?? '-'),
           Text(_deviceInfo?.deviceVersion ?? '-'),
+          ElevatedButton(
+            onPressed: () => NotificationApi().triggerNotification(
+              'Hello',
+              'This is a notification',
+            ),
+            child: Text('Trigger Notification'),
+          )
         ],
       ),
     );
