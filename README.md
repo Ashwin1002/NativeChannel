@@ -1,4 +1,3 @@
-
 # NativeChannel
 
 A project demonstrating how to use the **Pigeon** package to create seamless communication bridges between Flutter and native platforms (Swift for iOS and Kotlin for Android).
@@ -26,36 +25,59 @@ Ensure the following are installed on your system:
 ## Setup and Installation
 
 ### Clone the Repository
+
 ```bash
 git clone https://github.com/Ashwin1002/NativeChannel.git
 cd NativeChannel
 ```
 
 ### Install Dependencies
+
 If `pigeon` is not installed then install from your terminal by using:
+
 ```bash
 dart pub add pigeon
 ```
+
 or
+
 ```
 dependencies:
   pigeon: ^22.7.4
 ```
 
 ### Generate Pigeon Code
-Pigeon uses a `.dart` file (defined in the `pigeon` folder) to generate platform-specific code. To generate these files, run:
-```bash
-flutter pub run pigeon \
-  --input pigeon/native_api.dart \
-  --dart_out lib/native_channel.dart \
-  --kotlin_out android/app/src/main/kotlin/com/example/native_channel/NativeApi.kt \
-  --swift_out ios/Runner/NativeApi.swift
+
+Create a folder `pigeon` outside of your lib folder. Create a file `messages.dart`.
+Configure pigeon as below:
+
+```dart
+@ConfigurePigeon(
+  PigeonOptions(
+    dartOut: 'lib/src/messages.g.dart',
+    dartOptions: DartOptions(),
+    kotlinOut:
+        'android/app/src/main/kotlin/com/example/native_channel/Messages.g.kt',
+    kotlinOptions: KotlinOptions(
+      errorClassName: 'MessageException',
+    ),
+    swiftOut: 'ios/Runner/Messages.g.swift',
+    swiftOptions: SwiftOptions(
+      errorClassName: 'MessageException',
+    ),
+  ),
+)
 ```
 
-- Replace `native_api.dart` with your Pigeon schema file if needed.
+```bash
+dart run pigeon --input pigeon/messages.dart
+```
+
+- Replace `messages.dart` with your Pigeon schema file if needed.
 - Output files will be generated for Dart, Kotlin, and Swift.
 
 ### Run the App
+
 - **For Android**:
   ```bash
   flutter run -d android
@@ -72,7 +94,9 @@ flutter pub run pigeon \
 Pigeon bridges Flutter with native platforms via method calls. Here’s how it works:
 
 ### 1. Define APIs in a Dart File
+
 Create a schema in a `.dart` file for your APIs. For example:
+
 ```dart
 import 'package:pigeon/pigeon.dart';
 
@@ -91,14 +115,18 @@ abstract class NotificationApi {
 ```
 
 ### 2. Generate Code
+
 Run the Pigeon generation command (as explained earlier). This will create:
+
 - A Dart API in `lib/native_channel.dart`.
 - Platform-specific APIs in Kotlin and Swift for Android and iOS.
 
 ### 3. Implement Native Code
+
 In your Kotlin or Swift files, implement the methods defined in the Dart schema.
 
 #### Kotlin Example
+
 ```kotlin
 class NotificationApiImpl : NotificationApi {
     override fun checkNotificationPermission(): NotificationPermissionStatus { ... }
@@ -108,6 +136,7 @@ class NotificationApiImpl : NotificationApi {
 ```
 
 #### Swift Example
+
 ```swift
 class NotificationApiImpl: NotificationApi {
     func checkNotificationPermission() -> NotificationPermissionStatus { ... }
@@ -117,9 +146,11 @@ class NotificationApiImpl: NotificationApi {
 ```
 
 ### 4. Connect the APIs to Flutter
+
 Use the `setup` function in the generated code to connect Flutter and native APIs.
 
 #### Example (AppDelegate for iOS)
+
 ```swift
 NotificationApiSetup.setUp(binaryMessenger: messenger, api: NotificationApiImpl())
 ```
@@ -147,4 +178,3 @@ NotificationApiSetup.setUp(binaryMessenger: messenger, api: NotificationApiImpl(
 - [Flutter Documentation](https://flutter.dev/docs)
 
 ---
-
